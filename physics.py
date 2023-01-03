@@ -1,5 +1,6 @@
 import random
 import math
+import numpy as np
 
 class Particle:
     def __init__(self, screensize, mass, energy, color, elasticity=1):
@@ -14,6 +15,7 @@ class Particle:
         self.y_direction = random.uniform(-1, 1)
         self.speed = self.calculate_speed()
         self.calculate_speed_vectors()
+        self.speed_vector = np.array([self.x_speed, self.y_speed])
 
         #position
         min_x, max_x = screensize * 0.1, screensize * 0.9

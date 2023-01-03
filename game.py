@@ -59,12 +59,27 @@ while running:
         for p in particle_list:
             if(p1 is not p):
                 if((p1.x - p.x) ** 2 + (p1.y - p.y) ** 2) ** (1/2) - (p1.radius + p.radius) <= error:
+                    speed1 = (p1.x_speed, p1.y_speed)
+                    speed2 = (p.x_speed, p.y_speed)
+                    
+                    #colisao inelastica
+                    p.x_speed = (p1.mass * speed1[0] + p.mass * speed2[0]) / (p1.mass + p.mass)
+                    p1.x_speed = p.x_speed
+                    p.y_speed = (p1.mass * speed1[1] + p.mass * speed2[1]) / (p1.mass + p.mass)
+                    p1.y_speed = p.y_speed
 
-                    #colisão perfeitamente inelástica
-                    p1.x_speed = 0
-                    p1.y_speed = 0
-                    p.y_speed = 0
-                    p.x_speed = 0
+                    #colisão com perda total de energia
+                    # p1.x_speed = 0
+                    # p1.y_speed = 0
+                    # p.y_speed = 0
+                    # p.x_speed = 0
+
+    Qx, Qy = 0, 0
+    for p in particle_list:
+        Qx += p.mass * p.x_speed
+        Qy += p.mass * p.y_speed
+    
+    print(f'Q: ({Qx, Qy, Qx + Qy})')
 
     # Flip the display
     pygame.display.flip()
